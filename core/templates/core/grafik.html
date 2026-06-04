@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisasi Data Django</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #f4f7f6; }
+        .container { width: 60%; margin: 50px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Grafik Penjualan Produk</h2>
+        <canvas id="grafikPenjualan" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Ambil data dari API Django menggunakan fetch
+        fetch('/api/data-grafik/')
+            .then(response => response.json())
+            .then(dataBackend => {
+                const ctx = document.getElementById('grafikPenjualan').getContext('2d');
+                
+                // Inisialisasi Chart.js
+                new Chart(ctx, {
+                    type: 'bar', // Anda bisa ganti jadi 'line', 'pie', atau 'doughnut'
+                    data: {
+                        labels: dataBackend.labels, // Data label dari Django (Nama Produk)
+                        datasets: [{
+                            label: 'Jumlah Terjual',
+                            data: dataBackend.data, // Data angka dari Django (Jumlah)
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(255, 206, 86, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 206, 86, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Gagal mengambil data:', error));
+    </script>
+</body>
+</html>

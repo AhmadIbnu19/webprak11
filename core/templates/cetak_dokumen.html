@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Cetak Invoice</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        .invoice-box { padding: 20px; border: 1px solid #eee; max-width: 800px; margin: auto; }
+        .btn-cetak { background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; margin-bottom: 20px; }
+        
+        /* CSS Khusus Saat Dicetak */
+        @media print {
+            .btn-cetak {
+                display: none; /* Sembunyikan tombol cetak saat di-print */
+            }
+            body {
+                margin: 0; /* Optimalkan margin kertas */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invoice-box">
+        <button class="btn-cetak" onclick="window.print()">Cetak Dokumen Ini</button>
+
+        <h2>INVOICE TAGIHAN</h2>
+        <hr>
+        <p><strong>Nomor:</strong> {{ nomor_invoice }}</p>
+        <p><strong>Pelanggan:</strong> {{ nama_pelanggan }}</p>
+        <p><strong>Total:</strong> {{ total_tagihan }}</p>
+        <p>Terima kasih telah melakukan pembayaran.</p>
+    </div>
+
+</body>
+</html>
